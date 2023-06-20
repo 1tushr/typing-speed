@@ -6,12 +6,12 @@ const darkTheme={
 }
 
 
-const greenTheme={
-    label:'Green',
-    background:'green',
-    textColor:'black',
-    typeBoxText:'pink'
-}
+// const greenTheme={
+//     label:'Green',
+//     background:'green',
+//     textColor:'black',
+//     typeBoxText:'pink'
+// }
 
 const fledging ={
     label:"Fledging",
@@ -22,7 +22,7 @@ const fledging ={
 export const themeOptions=[
    
     {label:'Dark',value:darkTheme},
-    {label:'Green',value:greenTheme},
+    // {label:'Green',value:greenTheme},
     {label:'Fledging',value:fledging},
    
 ]

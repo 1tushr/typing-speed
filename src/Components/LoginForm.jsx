@@ -69,8 +69,8 @@ handleClose();
       
         }}
       >
-        <TextField variant="outlined" type="email" label="Enter Email" InputLabelProps={{style:{color:theme.textColor}}} onChange={(e)=>setEmail(e.target.value)} />
-        <TextField variant="outlined" type="password" label="Enter Password" InputLabelProps={{style:{color:theme.textColor}}} onChange={(e)=>setPassword(e.target.value)}/>
+        <TextField variant="outlined" type="email" label="Enter Email" InputLabelProps={{style:{color:theme.textColor}}} inputProps={{ style: { color: theme.textColor } }} onChange={(e)=>setEmail(e.target.value)} />
+        <TextField variant="outlined" type="password" label="Enter Password" InputLabelProps={{style:{color:theme.textColor}}}  inputProps={{ style: { color: theme.textColor } }}onChange={(e)=>setPassword(e.target.value)}/>
         <Button style={{color:theme.background,backgroundColor:theme.textColor}} variant="contained" size="large" onClick={handleSubmit}>
           LOGIN
         </Button>

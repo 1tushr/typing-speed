@@ -3,12 +3,13 @@ import { Box, Button, TextField } from "@mui/material";
 import { auth } from "../firebaseConfig";
 import { toast } from "react-toastify";
 import errorMapping from "../utils/errorMapping";
+import { useTheme } from "../Context/ThemeContext";
 
-export default function SignupForm({handleClose}) {
+export default function SignupForm({ handleClose }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
+const {theme}=useTheme();
   const handleSubmit = () => {
     if (!email || !password || !confirmPassword) {
       toast.warning("Please fill in all the details", {
@@ -53,8 +54,7 @@ export default function SignupForm({handleClose}) {
         handleClose();
       })
       .catch((err) => {
-        
-        toast.error(errorMapping[err.code]||'some error occurred', {
+        toast.error(errorMapping[err.code] || "some error occurred", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -75,7 +75,7 @@ export default function SignupForm({handleClose}) {
           display: "flex",
           flexDirection: "column",
           gap: "20px",
-          backgroundColor: "white",
+          backgroundColor: 'black',
         }}
       >
         <TextField
@@ -83,21 +83,27 @@ export default function SignupForm({handleClose}) {
           type="email"
           label="Enter Email"
           onChange={(e) => setEmail(e.target.value)}
+          InputLabelProps={{style:{color:theme.textColor}}}
+          inputProps={{ style: { color: theme.textColor } }}
         />
         <TextField
           variant="outlined"
           type="password"
           label="Enter Password"
+          InputLabelProps={{style:{color:theme.textColor}}}
+          inputProps={{ style: { color: theme.textColor } }}
           onChange={(e) => setPassword(e.target.value)}
         />
         <TextField
           variant="outlined"
           type="password"
           label="Confirm Password"
+          InputLabelProps={{style:{color:theme.textColor}}}
+          inputProps={{ style: { color: theme.textColor } }}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
 
-        <Button variant="contained" size="large" onClick={handleSubmit}>
+        <Button variant="contained" style={{color:theme.background,backgroundColor:theme.textColor}}  size="large"onClick={handleSubmit}>
           SIGN UP
         </Button>
       </Box>

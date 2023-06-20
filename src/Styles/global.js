@@ -114,6 +114,8 @@ animation-timing-function:ease;
     justify-content:space-evenly;
     margin-top:2rem;
     margin-bottom:2rem;
+    gap: 3rem;
+    align-items: baseline;
 }
 .left-stats{
     margin-left:auto;
