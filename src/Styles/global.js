@@ -140,10 +140,11 @@ animation-timing-function:ease;
     justify-content: space-between;
 }
 
-/* .logo{
-    width :10px;
-    height:10px;
-} */
+.logo-image {
+    width: 97px;
+    height: auto;
+    margin: 0rem -8rem -2rem -20rem;
+}
 
 
 
