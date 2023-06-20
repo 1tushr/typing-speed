@@ -49,7 +49,7 @@ export default function UserPage() {
       <div className="graph-user-page">
         <Graph graphData={graphData} />
       </div>
-      <TableUser data={data} />
+      <TableUser className="table" data={data} />
     </div>
   );
 }

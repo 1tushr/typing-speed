@@ -10,7 +10,7 @@ body{
     margin:0;
     padding:0;
     transition:all 0.25 linear;
-    padding-top:10rem;
+    //padding-top:10rem;
 }
 
 .canvas{
@@ -153,7 +153,7 @@ animation-timing-function:ease;
     background: ${({theme})=>theme.typeBoxText};
     border-radius: 20px;
     justify-content: center;
-    align-text: center;
+    text-align: center;
 }
 .user{
     width: 50%;
@@ -168,24 +168,41 @@ animation-timing-function:ease;
 
 .info{
     width: 60%;
-    padding: 1rem;
-    margin-top: 1rem;
+    padding: 2rem;
+    margin-top: 2rem;
+    margin-left:3rem;
     border-right: 2px solid;
+
+    
 }
 .picture{
     width: 40%;
+  
 }
 
 .total-tests{
-    width: 50%;
-    font-size: 3rem;
+    width: 70%;
+    font-size: 2rem;
+   
     display: flex;
-    justify-content: center;
-    align-items: center;
+        flex-direction: row;
+    margin-left: 7rem;
+    margin-right: -10rem;
+    margin-top: 4rem;
 }
 
-.graph, .table{
-    width: 1000px;
-    margin: auto;
+.graph-user-page {
+    margin:auto;
+    width:1000px;
+
+    /* margin-left:auto;
+    margin-right:auto;
+    width: 50%; */
 }
+.MuiTableContainer-root {
+    margin:auto;
+    width:1000px; 
+}
+
+
 `;
