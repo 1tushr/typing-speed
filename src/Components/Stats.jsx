@@ -95,7 +95,7 @@ export default function Stats({
     const fetchDataFromDb = () => {
       const resultsRef = db.collection("Results");
       const user = auth.currentUser;
-
+  
       if (user && user.uid) {
         resultsRef
           .where("userId", "==", user.uid)
@@ -105,8 +105,9 @@ export default function Stats({
             const fetchedResults = querySnapshot.docs.map((doc) => doc.data());
             setResults(fetchedResults);
           })
-          .catch(() => {
-            toast.error("Unable to fetch data", {
+          .catch((error) => {
+            console.log(error)
+            toast.error("Unable to fetch data: " + error.message, {
               position: "top-right",
               autoClose: 5000,
               hideProgressBar: false,
@@ -117,12 +118,22 @@ export default function Stats({
               theme: "dark",
             });
           });
+      } else {
+        toast.warning("Login to save the result", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       }
     };
-
+  
     fetchDataFromDb();
   }, []);
-
   return (
     <div className="stats-box">
       <div className="left-stats">

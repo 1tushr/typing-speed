@@ -30,9 +30,9 @@ export default function Footer() {
 
   return (
     <div className="footer">
-      Footer
+      CHANGE THEME
       <div className="links">
-        links
+        
         <Select
           onChange={handleChange}
           options={themeOptions}
