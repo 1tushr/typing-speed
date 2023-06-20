@@ -4,7 +4,7 @@ import { auth } from "../firebaseConfig";
 import { toast } from "react-toastify";
 import errorMapping from "../utils/errorMapping";
 
-export default function SignupForm() {
+export default function SignupForm({handleClose}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -50,6 +50,7 @@ export default function SignupForm() {
           progress: undefined,
           theme: "dark",
         });
+        handleClose();
       })
       .catch((err) => {
         

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Graph from "./Graph";
 import { auth, db } from "../firebaseConfig";
 import { toast } from "react-toastify";
@@ -12,6 +12,8 @@ export default function Stats({
   extraChars,
   graphData,
 }) {
+  const [results, setResults] = useState([]);
+
   let timeSet = new Set();
   const newGraph = graphData.filter((i) => {
     if (!timeSet.has(i[0])) {
@@ -21,7 +23,7 @@ export default function Stats({
   });
 
   const pushDataToDb = () => {
-    if(isNaN(accuracy)){
+    if (isNaN(accuracy)) {
       toast.error("Invalid test ", {
         position: "top-right",
         autoClose: 5000,
@@ -34,61 +36,91 @@ export default function Stats({
       });
       return;
     }
+
     const resultsRef = db.collection("Results");
-    const { uid } = auth.currentUser;
-    resultsRef
-      .add({
-        wpm: wpm,
-        accuracy: accuracy,
-        timeStamp: new Date(),
-        characters: `${correctChars}/${incorrectChars}/${missedChars}/${extraChars}`,
-        userId: uid,
-      })
-      .then(() => {
-        toast.success("Data saved to db", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
+    const user = auth.currentUser;
+
+    if (user && user.uid) {
+      resultsRef
+        .add({
+          wpm: wpm,
+          accuracy: accuracy,
+          timeStamp: new Date(),
+          characters: `${correctChars}/${incorrectChars}/${missedChars}/${extraChars}`,
+          userId: user.uid,
+        })
+        .then(() => {
+          toast.success("Data saved to db", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+        })
+        .catch(() => {
+          toast.error("Unable to save data", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
         });
-      })
-      .catch(() => {
-        toast.error("Unable to save data", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
+    } else {
+      toast.warning("Login to save the result", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
       });
+    }
   };
 
   useEffect(() => {
-    const checkUserAndSaveData = () => {
-      if (auth.currentUser) {
-        pushDataToDb();
-      } else {
-        toast.warning("Login to save the result", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
+    pushDataToDb();
+  }, []);
+
+  useEffect(() => {
+    const fetchDataFromDb = () => {
+      const resultsRef = db.collection("Results");
+      const user = auth.currentUser;
+
+      if (user && user.uid) {
+        resultsRef
+          .where("userId", "==", user.uid)
+          .orderBy("timeStamp", "desc") // Sort the results in descending order
+          .get()
+          .then((querySnapshot) => {
+            const fetchedResults = querySnapshot.docs.map((doc) => doc.data());
+            setResults(fetchedResults);
+          })
+          .catch(() => {
+            toast.error("Unable to fetch data", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+            });
+          });
       }
     };
 
-    checkUserAndSaveData();
+    fetchDataFromDb();
   }, []);
 
   return (
@@ -105,6 +137,19 @@ export default function Stats({
       </div>
       <div className="right-stats">
         <Graph graphData={newGraph}></Graph>
+      </div>
+      <div className="results-list">
+        <h2>Recent Results:</h2>
+        <ul>
+          {results.map((result, index) => (
+            <li key={index}>
+              <div>WPM: {result.wpm}</div>
+              <div>Accuracy: {result.accuracy}</div>
+              <div>Timestamp: {result.timeStamp.toDate().toLocaleString()}</div>
+              <div>Characters: {result.characters}</div>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

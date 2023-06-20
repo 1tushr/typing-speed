@@ -5,7 +5,7 @@ import { useTheme } from "../Context/ThemeContext";
 import { auth } from "../firebaseConfig";
 import { toast } from "react-toastify";
 import errorMapping from "../utils/errorMapping";
-export default function LoginForm() {
+export default function LoginForm({handleClose}) {
     const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');
     const {theme}=useTheme();
@@ -38,7 +38,7 @@ auth.signInWithEmailAndPassword(email,password).then((res)=>{
     theme: "dark",
     });
   
-
+handleClose();
 
 
 
