@@ -180,19 +180,19 @@ export default function TypingBox() {
 
   return (
     <>
-      <UpperMenu countDown={countDown}></UpperMenu>
-
-      {testEnd ? (
-        <Stats
-          wpm={calculateWPM()}
-          accuracy={calculateAcc()}
-          correctChars={correctChars}
-          incorrectChars={incorrectChars}
-          missedChars={missedChars}
-          extraChars={extraChars}
-          graphData={graphData}
-        ></Stats>
-      ) : (
+        {!testEnd && <UpperMenu countDown={countDown} />}
+    
+    {testEnd ? (
+      <Stats
+        wpm={calculateWPM()}
+        accuracy={calculateAcc()}
+        correctChars={correctChars}
+        incorrectChars={incorrectChars}
+        missedChars={missedChars}
+        extraChars={extraChars}
+        graphData={graphData}
+      />
+    ) : (
         <div className="type-box" onClick={focusInput}>
           <div className="words">
             {wordsArray.map((words, index) => (

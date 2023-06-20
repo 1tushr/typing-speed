@@ -151,7 +151,7 @@ export default function Stats({
       </div>
       <div className="results-list">
         <h2>Recent Results:</h2>
-        <ul>
+        {/* <ul>
           {results.map((result, index) => (
             <li key={index}>
               <div>WPM: {result.wpm}</div>
@@ -160,7 +160,7 @@ export default function Stats({
               <div>Characters: {result.characters}</div>
             </li>
           ))}
-        </ul>
+        </ul> */}
       </div>
     </div>
   );
