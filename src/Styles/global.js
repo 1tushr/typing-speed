@@ -80,7 +80,7 @@ animation-timing-function:ease;
 
 
 .correct{
-    color:${({ theme }) => theme.typeBoxColor};
+    color:green;
 }
 .incorrect{
     color:red;
